@@ -1,5 +1,6 @@
 from pygame import *
 from random import randint
+# z
 
 speed_y = randint(2, 4)
 
@@ -19,7 +20,7 @@ sila22 = 3
 mixer.init()
 mixer.music.load('likovanie-publiki-27488.ogg')
 mixer.music.play()
-fire_sound = mixer.Sound('otskok-myacha.ogg')
+fire_sound = mixer.Sound('schelchok-zapuska-myacha.ogg')
 
 
 
@@ -44,22 +45,20 @@ class Player(GameSprite):
        if keys[K_UP] and self.rect.y > 5:
            self.rect.y -= self.speed
        if keys[K_DOWN] and self.rect.y < win_height - 80:
-           self.rect.y += self.speed
-       if keys[K_q] and self.rect.y < 350:
-            speed_x *= -1
-            speed_y *= 1
-            sila11 = sila11 - 1    
+           self.rect.y += self.speed 
    def update_l(self):
        keys = key.get_pressed()
        if keys[K_w] and self.rect.y > 5:
            self.rect.y -= self.speed
        if keys[K_s] and self.rect.y < win_height - 80:
            self.rect.y += self.speed
-       if keys[K_p] and rect.y > 350:
-            speed_x *= -1
-            speed_y *= 1 
-            sila22 = sila22 - 1 
-        
+
+#class text(font):
+#    def __init__(self, text_speed):
+#        self.speed = text_speed
+#
+#
+#text = (оооооо, 1, (255, 25, 255), 5)
 
 class Sila(GameSprite):
     def sila1(self):
@@ -76,8 +75,6 @@ class Sila(GameSprite):
             sila22 = sila22 - 1 
 
            
-
-
 
 #игровая сцена:
 
@@ -130,12 +127,12 @@ while game:
        text1 = font1.render("Счет: " + str(score1), 1, (255, 25, 255))
        window.blit(text1, (30, 90))
        text2 = font1.render("Счет: " + str(score2), 1, (255, 25, 255)) 
-       window.blit(text2, (580, 90))  
+       window.blit(text2, (565, 90))  
 
-       sila111 = font1.render("Сила: " + str(sila22), 1, (255, 25, 255))
-       window.blit(sila111, (30, 60))
-       sila222 = font1.render("Сила: " + str(sila11), 1, (255, 25, 255)) 
-       window.blit(sila222, (580, 60)) 
+    #   sila111 = font1.render("Сила: " + str(sila22), 1, (255, 25, 255))
+    #   window.blit(sila111, (30, 60))
+    #   sila222 = font1.render("Сила: " + str(sila11), 1, (255, 25, 255)) 
+    #   window.blit(sila222, (580, 60)) 
 
 
        if sprite.collide_rect(racket1, ball): 
@@ -150,6 +147,9 @@ while game:
             speed_y *= 1
             score2 = score2 + 1
             fire_sound.play()
+
+
+    
       
        #если мяч достигает границ экрана, меняем направление его движения
        if ball.rect.y > win_height-50 or ball.rect.y < 0:
@@ -169,17 +169,7 @@ while game:
            finish = True
            window.blit(lose2, (250, 90))
            game_over = True
-
-        # сила
-
-
-
-
-        
-
-        
-
-   
+    
 
 
        racket1.reset()
