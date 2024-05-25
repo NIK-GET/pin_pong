@@ -1,4 +1,8 @@
 from pygame import *
+from random import randint
+
+speed_y = randint(2, 4)
+
 '''Необходимые классы'''
 
 # подгружаем отдельно функции для работы со шрифтом
@@ -8,6 +12,8 @@ font1 = font.SysFont('Arial', 30)
 
 score1 = 0
 score2 = 0
+sila11 = 3
+sila22 = 3
 
 #фоновая музыка
 mixer.init()
@@ -39,12 +45,38 @@ class Player(GameSprite):
            self.rect.y -= self.speed
        if keys[K_DOWN] and self.rect.y < win_height - 80:
            self.rect.y += self.speed
+       if keys[K_q] and self.rect.y < 350:
+            speed_x *= -1
+            speed_y *= 1
+            sila11 = sila11 - 1    
    def update_l(self):
        keys = key.get_pressed()
        if keys[K_w] and self.rect.y > 5:
            self.rect.y -= self.speed
        if keys[K_s] and self.rect.y < win_height - 80:
            self.rect.y += self.speed
+       if keys[K_p] and rect.y > 350:
+            speed_x *= -1
+            speed_y *= 1 
+            sila22 = sila22 - 1 
+        
+
+class Sila(GameSprite):
+    def sila1(self):
+       keys = key.get_pressed()
+       if keys[K_q] and self.rect.y < 350:
+            speed_x *= -1
+            speed_y *= 1
+            sila11 = sila11 - 1 
+    def sila2(self):
+       keys = key.get_pressed()
+       if keys[K_p] and self.rect.y > 350:
+            speed_x *= -1
+            speed_y *= 1 
+            sila22 = sila22 - 1 
+
+           
+
 
 
 #игровая сцена:
@@ -100,21 +132,29 @@ while game:
        text2 = font1.render("Счет: " + str(score2), 1, (255, 25, 255)) 
        window.blit(text2, (580, 90))  
 
+       sila111 = font1.render("Сила: " + str(sila22), 1, (255, 25, 255))
+       window.blit(sila111, (30, 60))
+       sila222 = font1.render("Сила: " + str(sila11), 1, (255, 25, 255)) 
+       window.blit(sila222, (580, 60)) 
+
 
        if sprite.collide_rect(racket1, ball): 
            speed_x *= -1
            speed_y *= 1
            score1 = score1 + 1
+           fire_sound.play()
 
 
        if sprite.collide_rect(racket2, ball):
             speed_x *= -1
             speed_y *= 1
             score2 = score2 + 1
+            fire_sound.play()
       
        #если мяч достигает границ экрана, меняем направление его движения
        if ball.rect.y > win_height-50 or ball.rect.y < 0:
            speed_y *= -1
+           fire_sound.play()
 
 
        #если мяч улетел дальше ракетки, выводим условие проигрыша для первого игрока
@@ -129,6 +169,14 @@ while game:
            finish = True
            window.blit(lose2, (250, 90))
            game_over = True
+
+        # сила
+
+
+
+
+        
+
         
 
    
